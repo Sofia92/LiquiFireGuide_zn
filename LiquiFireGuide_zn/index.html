@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>LiquiFire Orb指南</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+	</head>
+
+	<body>
+		<div class="container col-md-8 col-md-offset-2">
+			<nav class="nav navbar-inverse navbar-fixed-top" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<a href="#" class="navbar-brand active">LiquiFire Orb指南</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li row="presentation" class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">基础<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>Overiew</li>
+								<li><a href="#basic_imagechains">image Chains</a></li>
+								<li><a href="#basic_textchains">text chains</a></li>
+								<li role="separator" class="divider"></li>
+								<li>Quick Start</li>
+								<li><a href="#quickstart">Basic Training and Quick Start</a></li>
+							</ul>
+						</li>
+						<li row="presentation" class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">LiquiFire Orb界面<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>Manage Assets</li>
+								<li><a href="#login_view">登录界面</a></li>
+								<li><a href="#manage_view">Manage Assets界面</a></li>
+								<li><a href="#editassets">编辑Assets界面</a></li>
+								<li role="separator" class="divider"></li>
+								<li>Tools</li>
+								<li><a href="#explore_UI">Explore界面</a></li>
+								<li><a href="#FontMap_UI">Font Map界面</a></li>
+								<li><a href="#ChainCipher_UI">Chain Cipher界面</a></li>
+							</ul>
+						</li>
+						<li row="presentation" class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">实例<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="#fomat">image格式转换</a></li>
+								<li><a href="#sacling">image缩放</a></li>
+								<li><a href="#complex">较复杂的缩放</a></li>
+								<li><a href="#DynElements">动态成像元素</a></li>
+								<li><a href="#ComplexCalculat">负责计算</a></li>
+								<li><a href="#simpletext">简单文本</a></li>
+								<li><a href="#Sophtext">复杂文本</a></li>
+							</ul>
+						</li>
+						<li><a href="#command">command查询</a> </li>
+						<li row="presentation"><a href="#textchains">text Chains模板</a></li>
+						<div class="navbar-form navbar-right">
+							<input type="text" class="form-control" placeholder="Search">
+							<button type="submit" class="btn btn-default">搜索</button>
+						</div>
+					</ul>
+				</div>
+			</nav>
+			<br />
+			<div id="basic">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h1>基础相关介绍</h1>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<h3>一、测试帐号</h3>
+							<div class="col-md-6">
+								<div class="panel panel-info">
+									<div class="panel-heading">LiquidPixels测试账号</div>
+									<div class="panel-body">
+										<ul class="list-group">
+											<li class="list-group-item">URL:<a href="http://voyageone.orb.liquifire.com/Orb/" target="_blank"> http://voyageone.orb.liquifire.com/Orb/</a></li>
+											<li class="list-group-item">Username: voyageone</li>
+											<li class="list-group-item">Password: !1voyage5one9</li>
+											<li class="list-group-item">Support: support@liquidpixels.com</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="panel panel-info">
+									<div class="panel-heading">LiquidPixels测试SFTP</div>
+									<div class="panel-body">
+										<ul class="list-group">
+											<li class="list-group-item">Host: voyageone.assets.liquifire.com</li>
+											<li class="list-group-item">Username: voyageone</li>
+											<li class="list-group-item">Password: voyageone#</li>
+											<li class="list-group-item">Port: 22</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="basic_imagechains">
+							<h2>二、Overview</h2>
+							<h3>image Chains</h3>
+							<h4>2.1、定义</h4>
+							<p>image Chains是通过发送一系列命令才得以在LiquiFire里创建，这些命令，称之为Request。image Chains连同与之相关联的元数据被存放在一个Job里。image Chains不能自己被创建，而是呈现出一个命令行的序列。如下图示：</p>
+							<img src="img/fundamental/figure1.command Processing.png">
+							<h4>2.2、command类型</h4>
+							<p>发送到LiquiFire的命令类型有三种：direct、macro、metacommands。direct命令是最普通的，用于添加一个操作到image Chins里。macro宏命令可以执行额外的计算或处理，如在添加零个或多个操作到image Chains之前，先查询或计算数据库。最后,元命令允许操纵(元数据)与非图像数据。
+							</p>
+							<p>举例，如果你想在Web页面上显示一个宽度高度均为200pixels的图片，操作步骤应当是：获得原图片->规划图片到指定大小->以浏览器兼容的image格式，发送到浏览器。</p>
+							<p>Acquire Image Data-->Scale to within 200*200 pixels-->Send to caller 即： Source--Scale（200,200）--Sink</p>
+							<p>举例，一个简单的命令：commandOne=argOne[valueOne],argTwo[valueTwo]&commandTwo&..</p>
+							<blockquote class="bg-info">
+								<small>source =url[http://www.liquidpixels.com/images/suit.jpg]&</small>
+								<small>scale=size[200x200]&</small>
+								<small>sink</small>
+							</blockquote>
+							<h4>2.3、Multiple Images</h4>
+							<p>上面的例子是单个图片，很多场合我们需要拼合两张图，比如：Source[name=p]+Source-->Compose(200,200)-->Sink</p>
+							<blockquote class="bg-info">
+								<small>source=url[http://www.liquidpixels.com/images/pocketSquare.tif], name[p]&</small>
+								<small>source=url[http://www.liquidpixels.com/images/suit.jpg], name[s]&</small>
+								<small>select=name[s]&</small>
+								<small>composite=compose[Over],image[p],x[345],y[292]&</small>
+								<small>Sink</small>
+							</blockquote>
+							<img src="img/fundamental/figure1.Multiple image chain.png">
+							<p>上述第一个原图片，告诉LiquiFire取得pocketSquare.tif图片，添加到image pool里，并给它一个新名字 p。第二个原图片同样的操作。select语句使得suit图片成为当前使用的图片。Composite指定了x和y的位置偏移量。</p>
+						</div>
+						<div id="basic_textchains">
+							<h3>三、text Chains</h3>
+							<h4>3.1、四个commands</h4>
+							<p>Annotate（最主要），text，textcurve，mftext</p>
+							<p>【Annotate command】</p>
+							<ul>
+								<li>至少三个参数：pointsize，font，text</li>
+								<li>\n 用于文本间的换行</li>
+								<li>也可自主选择wrap 和 fit参数</li>
+								<li>text与annotate校准:需要在base image上放置一个基准点，在text对象上也放置一个基准点。base image上的点默认位于text基准线的左端，x和y坐标(0,0)。 </li>
+							</ul>
+							<h4>3.2、校准的可选项：</h4>
+							<blockquote class="bg-info">
+								<small>x,y坐标和gravity对齐</small>
+								<small>使用gravity就等于同时设置里x,y坐标和对齐点。在已经使用gravity基础上再设置x,y就是对位置的增量操作。</small>
+							</blockquote>
+							<h4>3.2、外观选项有：</h4>
+							<div class="col-md-12">
+								<div class="col-md-3 bg-success table-bordered">Fill（填充色，可以是任意颜色值或者RGB）</div>
+								<div class="col-md-3 bg-success table-bordered">Stroke（外轮廓，可设置轮廓的宽或颜色）</div>
+								<div class="col-md-3 bg-success table-bordered">Pointsize（字体大小，可以是数值比如18，或者是fit自适应）</div>
+								<div class="col-md-3 bg-success table-bordered">Wrap外包，设置一个像素长度限制导致转新行</div>
+							</div>
+							<h4>3.3、更多的技巧和窍门：</h4>
+							<ul>
+								<li>blank=color[none]或trim，可以去除背景色</li>
+								<li>其它详细参数可以从Users Guide里查找到。如下是一些比较常用的:
+									<ul>
+										<li>Annotate（rotate，leading，tracking等）</li>
+										<li>Sophisticated text （查看chapter3中的例子）</li>
+										<li>inline格式的选项在P102</li>
+										<li>mftext在P179</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div id="quickstart">
+							<h2>Basic Training and Quick Start </h2>
+							<h3>一、The key fundamentals </h3>
+							<ul>
+								<li>LF写的服务器脚本commands</li>
+								<li>image Chains 和 text Chains</li>
+								<li>对image Pool有一个栈的概念</li>
+								<li>每一个command都是操作在当前图片上</li>
+							</ul>
+							<p>image Chain形式如下：</p>
+							<blockquote class="bg-info">
+								<small>set=color[red],opc [45]</small>
+								<small>call=url [file:training /shirt.chain]</small>
+								<small>scale=size[450]</small>
+								<small>sink</small>
+							</blockquote>
+							<p>HTTP回调并响应：</p>
+							<img src="img/fundamental/httpcall.png">
+							<h3>二、Orb简介</h3>
+							<ul>
+								<li>Orb是基于浏览器的用户界面，使用Orb可以与LiquiFire服务器交互</li>
+							</ul>
+							<blockquote class="bg-info">
+								<h5>可以存储Chains为模板，便于后续调用</h5>
+								<h5>LiquiFireUsersGuide.pdf 必看章节P2-27和P71-83
+						<ul style="text-indent:2em;background-color: aliceblue;">
+							<li><small>source, blank, copy, select (UG p86)</small></li>
+							<li><small>image pool (UG p2)</small></li>
+							<li><small>variables, metadata, lookup tables (UG p25, 192)</small></li>
+							<li><small>text, annotate, textcurve, mftext (UG p102 and p179)</small></li>
+							<li><small>“if” and conditional execution (UG p22)</small></li>
+							<li><small>composite command (UG p115)</small></li>
+						</ul>
+					</h5>
+							</blockquote>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr />
+			<div id="UI">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h1>LiquiFire Orb界面</h1>
+					</div>
+					<div class="panel-body">
+						<div id="Orb_UI">
+							<div id="lo">
+								<h2 id="login_view">一、登录Orb</h2>
+								<h5>Step1:Orb Login视图</h5>
+								<img src="img/ui/login.png" />
+								<p>登录成功</p>
+								<img src="img/ui/login_success.png" />
+								<ol>
+									<li>顶部导航栏的Orb屏幕显示选项卡四个工作区,不同在用户登录的权利。</li>
+									<li>Manage，允许操纵LiquiFire资产存储为art,font,和chains和data和profiles。</li>
+									<li>Tools，包含工具开发、字体字形勘探和链密码生成。</li>
+									<li>可见的选择可能会有所不同,因为它们是由每个Orb的访问权限决定的，可从Setting处设置</li>
+								</ol>
+								<div class="col-md-12">
+								<h5 id="setting">设置界面如下所示</h5>
+									<ul class="list-group">
+										<li class="list-group-item text-center"><img src="img/ui/settings.png" /></li>
+										<li class="list-group-item">1.【用户帐户设置】，可添加新用户或编辑已有用户的账户信息与权限等。</li>
+										<li class="list-group-item">2.【Assets管理】，包括是否显示Assets预览；文件夹位于文件的位置；edit chains的打开方式（在新窗口或者原窗口打开）。</li>
+										<li class="list-group-item">3.【Explore设置】，设置文件名称，用户自定义文件名称。</li>
+									</ul>
+								</div>
+							</div>
+							<br />
+							<div id="manag">
+								<h5 id="manage_view">Step2:Manage视图</h5>
+								<h3>Manage Assets：</h3>
+								<p>与一个典型的文件系统一样,LiquiFire资产池可以组织成目录形式,并提供典型的文件处理功能,如重命名、删除、查看、上传等。</p>
+								<p>LiquiFire可以访问的适当的选项卡:Art、Fonts、Chains、Data、Profiles，如下图示：</p>
+								<div class="lizu">
+									<ul class="list-group">
+										<li class="list-group-item text-center"><img src="img/ui/manage assets_view.png" /></li>
+										<li class="list-group-item">Assets类目:默认常用的有Art（存放图片类资源）、Chains（存放模板）、Fonts（存放字体文件）、其它自定义需要的资源</li>
+										<li class="list-group-item">File路径:逐层显示资源所在的路径</li>
+										<li class="list-group-item">Assets详情:可显示资源的文件类型、大小、修改时间；选中文件，可在右上方进行对应的操作，从1开始含义分别为：文件名重命名、移动文件、删除文件、预览文件、grid视图、新建文件夹、新建文件、上传文件、刷新文件列表</li>
+									</ul>
+								</div>
+							</div>
+
+							<div id="editassets">
+								<h3>编辑Assets</h3>
+								<p>LiquiFire的image chains通常是编辑工具工作区中的Orb。然而，在Manage Assets里单击就可以编辑文本文件，编辑image chains。Fonts可以预览但不可编辑。</p>
+								<div id="row" class="col-md-12">
+									<div class="col-md-6">
+										<ul class="list-group">
+											<li class="list-group-item">对于text文件，可以在Manage Assets里预览并点击右下角edit进行编辑，如下图所示：</li>
+											<li class="list-group-item text-center"><img src="img/ui/editsampletext.png" /></li>
+										</ul>
+									</div>
+									<div class="col-md-6">
+										<ul class="list-group">
+											<li class="list-group-item">点击text文件的Edit后，可以直接对文本进行编辑，编辑成功后即可保存或取消编辑：</li>
+											<li class="list-group-item text-center"><img src="img/ui/editsampletextafter.png" /></li>
+										</ul>
+									</div>
+								</div>
+								<div id="row">
+									<h3>编辑Chains</h3>
+									<p>Image chains可以很容易从链标签进行编辑。为此,预览一个Chain,然后单击【Edit in Explorer】的按钮，如下图示。这将自动加载到浏览器并准备编辑。也可直接从Tools进入Explore进行编辑</p>
+									<img src="img/ui/editChains.png" />
+									<img src="img/ui/editChainsExplorer.png" />
+								</div>
+							</div>
+							<div id="tools">
+								<div id="toolsui">
+									<h2>Tools</h2>
+									<h3>概述</h3>
+									<blockquote>
+										LiquiFire Orb的工具部分给构图和管理image Chains提供了一些有用的工具
+										<small>Explorer:创建和编辑image Chains。</small>
+										<small>Font Map:检查可用的字体字形及其Unicode值。</small>
+										<small>Chain Cipher:加密或散列链安全形象。</small>
+									</blockquote>
+								</div>
+								<div id="explore_UI">
+									<h4>3.1 Tools: Explorer</h4>
+									<p>Explorer提供了一个直观的辅助框架内,开发LiquiFire的image Chains。其界面如下所示：</p>
+									<img src="img/ui/editChainsExplorer.png" />
+									<p>渲染区域是成像的预览区</p>
+									<p>编辑区域是image Chain编辑区</p>
+									<p>操作区域（从左至右详细介绍如下）</p>
+									<table border="1" class="table-hover">
+										<tr class="bg-primary">
+											<th class="text-center">列</th>
+											<th class="text-center">释义</th>
+										</tr>
+										<tr>
+											<td rowspan="2" class="bg-info">Fit/1：1</td>
+											<td>活动状态按钮。选择Fit,适合显示在预览窗格中所呈现的形象,这样整个图像都是可见的。</td>
+										</tr>
+										<tr>
+											<td>选择1:1,1:1图像显示(如果图像比较大，预览窗格会出现滚动条)。</td>
+										</tr>
+
+										<tr>
+											<td rowspan="2" class="bg-info">Auto Render/Manual Render</td>
+											<td>选择自动渲染，每次输入都使浏览器在预览窗格中自动重新呈现新的形象。</td>
+										</tr>
+										<tr>
+											<td>选择手动渲染，回到默认状态,当图像渲染按钮被选中时，浏览器的预览窗格才渲染。</td>
+										</tr>
+										<tr>
+											<td rowspan="2" class="bg-info">Multi Window/Single Window</td>
+											<td>选择多窗口查看预览面板作为一个单独的窗口中,这对多个显示器是有用的。</td>
+										</tr>
+										<tr>
+											<td>选择单一窗口(或简单地关闭单独的预览窗口)返回默认状态。</td>
+										</tr>
+										<tr>
+											<td class="bg-info">Save</td>
+											<td>保存修改未的Chains</td>
+										</tr>
+										<tr>
+											<td class="bg-info">Save As</td>
+											<td>保存文件到Chains Pool里。</td>
+										</tr>
+										<tr>
+											<td class="bg-info">Parse</td>
+											<td>类似格式化功能，当将一个网页上的Chains粘贴到Explorer,可以使用这个命令将这个Chain转化为一个可编辑格式,一些常见错误如重复&字符等也可被清理。</td>
+										</tr>
+										<tr>
+											<td class="bg-info">Render</td>
+											<td>渲染，将chain呈现在预览窗格里。</td>
+										</tr>
+									</table>
+									<h5>3.1.1 编辑Image Chains</h5>
+									<p>Chains是输入到文本区域的列表命令，以回车间隔开来。　在文本区域单击行号将设置一个断点,指导LiquiFire停止渲染过程。当你理解一个imageChain的功能作用时，用这个调试能够帮助你很好的去理解。</p>
+
+								</div>
+								<div id="FontMap_UI">
+									<h4>3.2 Tools: Font Map</h4>
+									<img src="img/ui/font map/fontmap.png" />
+									<p>LiquiFire允许通过Unicode字符集字符表达式访问完整的字体。虽然这功能允许用户表达请求中的任何字符,绝大Unicode字符仍然需要正确识别如上图，再去定义所需的字符。</p>
+								</div>
+								<div id="ChainCipher_UI">
+									<h4>3.3 Tools: Chain Cipher</h4>
+									<p>Chain Cipher用于给LiquiFire的image Chains生成加密密钥。如前所述，有些办法来限制访问LiquiFire服务器：通过参照主机与Key。对于Key方法，每个Chain增加了一个请求特定的关键Key，如果没有这些请求将不会渲染。另外，由于该键从请求本身产生，所述请求作出的任何改变将导致chain不去渲染。</p>
+									<p>有两种类型的密钥可被生成：一个简单的散列（在它自己的相当安全的）和更复杂的加密密码。</p>
+									<img src="img/ui/font map/chaincipher.png" />
+									<p>在Orb Explorer中的Chain Cipher工具将生成上面输入特定image Chains的关键Key。选择【Load from Explorer】可以有效加载最后一个image Chains。</p>
+									<p>选择Hash或Cipher按钮来给Chain编码。该编码文本将出现在文本区域，并有适当的Key连接。</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr />
+			<div id="Realexample">
+				<div class="panel panel-default">
+					<div class="panel-heading ">
+						<h1>实例</h1>
+					</div>
+					<div class="panel-body">
+
+						<div id="fomat">
+							<h3>Format Conversion</h3>
+							<p>利用LiquiFire可以渲染输出多种image格式，如下输出JPEG格式：</p>
+							<blockquote class="bg-info">
+								<small>source=url[http://www.liquidpixels.com/images/suit.jpg]</small>
+
+								<small>scale=size[50%]</small>
+								<small>sink=format[jpg]</small>
+								<p class="bg-danger">只需修改fomat后的内容即可，常用格式有format[gif]、format[bmp]、format[tiff]、[pdf]、format[g3fax]等</p>
+							</blockquote>
+						</div>
+						<div id="sacling">
+							<h3>Image Scaling</h3>
+							<p>相同分辨率的image可用作缩略图，如大图尺寸128，缩略图尺寸为64，只需修改scale的size参数即可。</p>
+							<div id="row" class="col-md-12">
+								<div class="col-md-6">
+									<ul class="list-group">
+										<li class="list-group-item">source=url[http://www.liquidpixels.com/images/suit.jpg]</li>
+										<li class="list-group-item">scale=size[128]</li>
+										<li class="list-group-item">sink=format[jpg]</li>
+										<li class="list-group-item text-center"><img src="img/ui/font map/scale128.png" /></li>
+									</ul>
+								</div>
+								<div class="col-md-6">
+									<ul class="list-group">
+										<li class="list-group-item">source=url[http://www.liquidpixels.com/images/suit.jpg]</li>
+										<li class="list-group-item">scale=size[64]</li>
+										<li class="list-group-item">sink=format[jpg]</li>
+										<li class="list-group-item text-center"><img src="img/ui/font map/scale64.png" /></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div id="complex">
+							<h3>Complex Scaling</h3>
+							<p>LiquiFire里的Scale缩放可以以多种方式来指定。这里，我们使用fit to square方法，要求源图像进行缩放，使得它完全适合一个128×128像素的正方形内。该方法允许也很容易地处理任何纵横比的图像。</p>
+
+							<div class="col-md-12" style="word-break: break-all;">
+								<div class="col-md-4">
+									<ul class="list-group">
+										<li class="list-group-item-info">如下是添加边框操作：</li>
+										<li class="list-group-item">source=url[http://www.liquidpixels.com/images/suit.jpg],name[img]</li>
+										<li class="list-group-item">scale=size[128]</li>
+										<li class="list-group-item">blank=width[128],height[128],color[firebrick4],name[bg]</li>
+										<li class="list-group-item">border=width[3],height[2],color[SlateGrey]</li>
+										<li class="list-group-item">composite=compose[Over],image[img],gravity[Center]</li>
+										<li class="list-group-item">sink=format[jpg]</li>
+										<li class="list-group-item text-center"><img src="img/ui/font map/complexscaleborder.png" /></li>
+									</ul>
+								</div>
+								<div class="col-md-4">
+									<ul class="list-group">
+										<li class="list-group-item-info">如果需要文字，只需在如上代码的sink前加上annotate标记：</li>
+										<li class="list-group-item">source=url[http://www.liquidpixels.com/images/suit.jpg],name[img]</li>
+										<li class="list-group-item">scale=size[128]</li>
+										<li class="list-group-item">blank=width[128],height[128],color[firebrick4],name[bg]</li>
+										<li class="list-group-item">border=width[3],height[2],color[SlateGrey]</li>
+										<li class="list-group-item">composite=compose[Over],image[img],gravity[Center]</li>
+										<li class="list-group-item"><strong>annotate=text[My Suit],font[VeraSans-Bold],pointsize[14],gravity[South],y[-4],fill[white]</strong></li>
+										<li class="list-group-item">sink=format[jpg]</li>
+										<li class="list-group-item text-center"><img src="img/ui/font map/complexscaleannotate.png" /></li>
+									</ul>
+								</div>
+								<div class="col-md-4">
+									<ul class="list-group">
+										<li class="list-group-item-info">同样的如果想把纯色背景变成图片背景，只需把blank处标记改为源图像：</li>
+										<li class="list-group-item">source=url[http://www.liquidpixels.com/images/suit.jpg],name[img]</li>
+										<li class="list-group-item">scale=size[300]</li>
+										<li class="list-group-item">border=width[3],height[2],color[SlateGrey]</li>
+										<li class="list-group-item"><strong>source=url[http://www.liquidpixels.com/images/clothingStore.jpg],name[mount]</strong></li>
+										<li class="list-group-item"><strong>scale=size[600]</strong></li>
+										<li class="list-group-item">composite=compose[Over],image[img],gravity[Center]</li>
+										<li class="list-group-item">annotate=text[My Suit],font[VeraSans-Bold],pointsize[14],gravity[South],y[-4],fill[white]</li>
+										<li class="list-group-item">sink=format[jpg]</li>
+										<li class="list-group-item text-center"><img src="img/ui/font map/complexscaleimgbg.png" style="width: 280px;" /></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div id="DynElements">
+							<h3>Dynamic Graphic Elements</h3>
+							<p>使用LiquiFire生成点播图像消除重复的任务，从而节省宝贵的时间和资源。更改设计元素，如文本，字体，大小，颜色和位置不再需要前往的图像编辑软件。即使是外语翻译仅仅是一个URL的变化。</p>
+							<p>点击每个参数的[]内的内容，即可修改，如下</p>
+							<div id="row">
+								<div class="col-md-6">
+									<ul class="list-group">
+										<li class="list-group-item">source=url[file:tab.eps]</li>
+										<li class="list-group-item">annotate=font[VeraSans-Roman],pointsize[9],text[Click Me],gravity[Center],fill[black]</li>
+										<li class="list-group-item">sink=format[GIF]</li>
+										<li class="list-group-item text-center"><img src="img/ui/font map/clickme.png" /></li>
+									</ul>
+								</div>
+								<div class="col-md-6">
+									<ul class="list-group">
+										<li class="list-group-item">source=url[file:tab.eps]</li>
+										<li class="list-group-item">annotate=font[VeraSans-Roman],pointsize[9],text[No Me],gravity[Center],fill[black]</li>
+										<li class="list-group-item">sink=format[GIF]</li>
+										<li class="list-group-item text-center"><img src="img/ui/font map/nome.png" /></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div id="ComplexCalculat" style="word-break: break-all;">
+							<h3>Complex Calculations</h3>
+							<p>一个复杂LiquiFire请求被封装在一个很小的存储链中（stored Chains）。如区域，颜色，目标日期等，这样的动态信息在URL中指定，调用call方法，可保持相似地外观。</p>
+							<div class="col-md-4">
+								<ul class="list-group">
+									<li class="list-group-item">set=key[a],value[nyc]</li>
+									<li class="list-group-item">set=key[color],value[aquamarine]</li>
+									<li class="list-group-item">set=key[date],value[2/14/2013]</li>
+									<li class="list-group-item">set=key[hday],value[Valentine’s Day]</li>
+									<li class="list-group-item">call=url[file:vdaybanneradj.chain]</li>
+									<li class="list-group-item-success" style="padding: 10px;">通过调用模板并设置主Key和它的值，可实现模板的最大优势可重复使用功能，其中，vdaybanneradj.chain模板内容最终显示效果，如右边所示。</li>
+								</ul>
+							</div>
+							<div class="col-md-8">
+								<ul class="list-group">
+									<li class="list-group-item-info text-center">vdaybanneradj.chain</li>
+									<li class="list-group-item">regexcase=key[global.a],cases[nyc|sfo|bos],values[nycbg.jpg|sfobg.jpg|bosbg.jpg],name[bg]</li>
+									<li class="list-group-item">regexcase=key[global.a],cases[nyc|sfo|bos],values[v1.gif|v2.gif|v1.gif],name[heart]</li>
+									<li class="list-group-item">regexcase=key[global.a],cases[nyc|sfo|bos],values[v1b.gif|v2b.gif|v2.gif],name[hearto]</li>
+									<li class="list-group-item">source=url[http://www.liquidpixels.com/images/global.bg]name[bg]</li>
+									<li class="list-group-item">source=url[http://www.liquidpixels.com/images/global.heart],name[hon]</li>
+									<li class="list-group-item">source=url[http://www.liquidpixels.com/images/global.hearto],name[hoff]</li>
+									<li class="list-group-item">select=name[bg]</li>
+									<li class="list-group-item">fontmetrics=text[global.vday],font[Dominican],pointsize[36]</li>
+									<li class="list-group-item">attribute=name[bg],key[delay],value[30]</li>
+									<li class="list-group-item">annotate=text[Only],font[Dominican],pointsize[22],fill[global.color],y[35],x[10]</li>
+									<li class="list-group-item">annotate=text[days left till global.hday],font[Dominican],pointsize[22],fill[global.color],y[35],x[117]</li>
+									<li class="list-group-item">countdown=target[global.date],key[vday]</li>
+									<li class="list-group-item">annotate=text[global.vday],font[Dominican],pointsize[36],fill[global.color],y[36],x[(95-bg.metrics.x/2)]</li>
+									<li class="list-group-item">composite=compose[over],image[hoff],x[386]</li>
+									<li class="list-group-item">addframe=image[hon],delay[30],x[386],trans[%23000000],x[0],y[0]</li>
+									<li class="list-group-item">optimize</li>
+									<li class="list-group-item">sink=format[gif],loop[forever]</li>
+									<li class="list-group-item text-center"><img src="img/ui/font map/complexcalculate.png" /></li>
+								</ul>
+							</div>
+						</div>
+						<div id="simpletext">
+							<h3>Simple Text</h3>
+							<p>简单的文本包括文本内容、字体、字体大小、填充色信息，脚本及实现效果如下</p>
+							<div id="row" class="col-md-12">
+								<div class="col-md-8 col-md-offset-2">
+									<ul class="list-group">
+										<li class="list-group-item"><img src="img/ui/font map/helloagain.png" /></li>
+										<li class="list-group-item">text=font[VeraSans-Italic],pointsize[24],fill[DarkGreen],text[Hello Again]</li>
+										<li class="list-group-item">sink=format[gif]</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div id="Sophtext">
+							<h3>Sophisticated Text</h3>
+							<p>LiquiFire可用于执行全文流量和布局，文本块，包括复杂的样式和表达如多类型的faces，weights或colors。</p>
+							<p>注意嵌入文本外观的变化，以及使用Unicode编码的字符字形：</p>
+							<div class="col-md-12" style="word-break: break-all;">
+								<div class="col-md-10 col-md-offset-1">
+									<ul class="list-group">
+										<li class="list-group-item text-center">
+											<img src="img/ui/font map/sophtext.png" />
+										</li>
+										<li class="list-group-item">source=url[file:im/keyline.EPS],name[img]</li>
+										<li class="list-group-item">annotate=text[
+											<p:20>ALICE
+												<p:14> was beginning to get very tired of sitting by her sister on the bank and of having nothing to do: once or twice she had peeped into the book her
+													<c:navy>sister
+														<c:black>was reading, but it had no pictures or conversations in it, “and what is the use of a book,” thought Alice, “without pictures or conversations?’\nSo she was considering, in her own mind U0028as well as she could, for the hot day made her
+															feel very sleepy and stupidU0029, whether the pleasure of making a daisy-chain would be worth the trouble of getting up and picking the daisies, when suddenly a White Rabbit with
+															<c:pink>pink
+																<c:black> eyes ran close by her.], pointsize[14],leading[2],width[500], font[Myriad-Roman],alignto[bottomleft],x[72],y[210]
+										</li>
+										<li class="list-group-item">annotate=text[Lewis Carroll -
+											<f:Myriad-Italic>Alice’s Adventures in Wonderland],pointsize[12], font[Myriad-Condensed],alignto[bottomleft],x[72],y[60]
+										</li>
+										<li class="list-group-item">sink</li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr />
+			<div id="command">
+				<div id="sourcecommd">
+					<div class="panel panel-default">
+						<div class="panel-heading ">
+							<h1>Command</h1>
+						</div>
+						<div class="panel-body">
+
+							<div id="blank">
+								<h3>Source Commands</h3>
+								<p>其他详细的command请参照【LiquiFireUsersGuide】Chapter 4 Base Command Set这一章</p>
+								<p><span class="label label-info">blank</span>创建一个新的形象，并将其添加到图像池。这是一个有指定的大小，用指定的背景颜色创建的新的图像。</p>
+								<p><span class="label label-default">参数</span>color:默认white；width、height：尺寸；name：可选参数，指定这个图的别名</p>
+								<p><span class="label label-default">举例</span>blank=width[100],height[50],color[DarkBlue]，创建一个深蓝色宽度100，高度50的纯色图片。</p>
+							</div>
+							<hr />
+							<div id="copy">
+								<p><span class="label label-info">copy</span>创建一个新的图像作为当前图像的副本。</p>
+								<p><span class="label label-default">参数</span>name：必选参数，指定想要复制的图的名称</p>
+							</div>
+							<hr />
+							<div id="source">
+								<p><span class="label label-info">source即src</span>从image pool取得的后续使用的源图片。图片源可以从http://,ftp://,或file:路径取得。</p>
+								<p><span class="label label-default">参数</span>url：必选，指向需要的源图片的位置；name：可选，指定想要复制的图的名称</p>
+								<p><span class="label label-default">举例</span>source=url[http://www.liquidpixels.com/images/suit.jpg]，从http取得源图片。同样，也可能从FTP服务器取得源图片。那么，此时的脚本应该改为：<span class="label label-default">source=url[ftp://auser:yourpassword@ftp.yoursite.com /images/ sampleimage.jpg]</span>									auser和yourpassword是FTP的账户信息</p>
+							</div>
+							<hr />
+							<div id="select">
+								<p><span class="label label-info">select</span>使得命名的图像作为当前操作图像，便于后续对这个图的操作。</p>
+								<p><span class="label label-default">参数</span>name：必选参数，指定图的名称</p>
+								<p><span class="label label-default">Example</span>我们加2图像到图像池。首先，一个大的JPG图像，store.jpg（5000×2820;3.9MB）命名为“storepic”，和第二JPEG图像，suit.jpg。SELECT命令使store.jpg图像作为当前图像，来执行后续的scale和sink命令操作。</p>
+								<div class="col-md-12">
+									<div class="col-md-8 col-md-offset-2">
+										<ul class="list-group">
+											<li class="list-group-item">source=url[http://www.liquidpixels.com/images/store.tif],name[storepic]</li>
+											<li class="list-group-item">source=url[http://www.liquidpixels.com/images/suit.jpg]</li>
+											<li class="list-group-item">select=name[storepic]</li>
+											<li class="list-group-item">scale=size[300x300]</li>
+											<li class="list-group-item">sink=format[jpeg]</li>
+											<li class="list-group-item text-center"><img src="img/ui/font map/select.png" /></li>
+										</ul>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div id="textchains">
+				<div id="textchains">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h4>textChains样式模板</h4>
+							<div class="col-md-6" style="word-break: break-all;">
+								<div class="panel panel-success">
+									<div class="panel-heading">没有对齐参考</div>
+									<div class="panel-body">blank=color[white],name[blk1],height[300],width[300]<br />draw=primitive[circle],points[50 50 50 51],stroke[blue],swidth[2]<br />annotate=text[Text String to be rendered],pointsize[18],fill[red],font[VeraSans-Bold] <br /> sink</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">对齐</div>
+									<div class="panel-body">draw=primitive[circle],points[150 150 150 151],stroke[blue],swidth[2]<br/>annotate=text[Text String to be rendered],pointsize[18],fill[red],font[VeraSans-Bold],gravity[center]</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">清除外轮廓</div>
+									<div class="panel-body">blank=color[white],name[blk1],height[300],width[300]<br/>annotate=text[Text String],pointsize[48],fill[red],font[VeraSans-Bold],gravity[center],stroke[green],swidth[10]<br/>annotate=text[Text String],pointsize[48],fill[red],font[VeraSans-Bold],gravity[center]</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">fit自适应</div>
+									<div class="panel-body">blank=color[white],name[blk1],height[300],width[300]<br/>annotate=text[Text String to be rendered],pointsize[18],fill[red],font[VeraSans-Bold],gravity[center],width[250],height[48]<br/>sink</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">使用fitsize</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/fitsize.png" /><br /> blank=color[white],name[blk1],height[300],width[300]
+										<br/>annotate=text[Text String to be rendered],pointsize[fit],fill[red],font[VeraSans-Bold],gravity[center],width[250],height[48]<br/>set=mySize[global.annotate.fitsize]<br/>annotate=text[Mike],pointsize[global.mySize],fill[red],font[VeraSans-Bold],gravity[center],width[250],height[48],y[50]<br/>sink</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">text文本</div>
+									<div class="panel-body">text=text[Text String],pointsize[60],fill[red],font[VeraSans-Bold]</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">文字曲线，文字有弧度</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/textcurvedefault.png" /><br /> blank=color[white],name[blk1],height[300],width[300]
+										<br/>draw=primitive[circle],points[150 150 150 151],stroke[blue],swidth[2]<br/>textcurve=text[Text to be rendered],pointsize[18],fill[red],font[VeraSans-Bold],radius[90],x[150],y[150]</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">文字曲线</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/textcurve.png" /><br /> blank=width[800],height[300]
+										<br/>set=mySize[40]<br/>annotate=text[THIS IS MY TEXT],pointsize[global.mySize],fill[black],font[VeraSans-Bold],x[400],y[230],alignto[center]<br/>textcurve=text[THIS IS MY TEXT],pointsize[global.mySize],fill[red],font[VeraSans-Bold],radius[1000],x[400],y[1100]<br/>textcurve=text[THIS
+										IS MY TEXT],pointsize[global.mySize],fill[blue],font[VeraSans-Bold],radius[1000],x[400],y[1170],escapement[ :(global.mySize * .3)]<br/>sink</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">通过x、y坐标将文本居中定位</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/centeringtext.png" /><br /> set=myX[250],myY[220],align[center],ptSize[48]
+										<br /> text=text[Text],pointsize[global.ptSize],fill[white],font[VeraSans-Bold],bgcolor[none],name[textel]
+										<br /> source=url[http://pgaglione.liquidpixels.com/images/bubble1.jpg],name[i1]
+										<br /> draw=primitive[circle],points[global.myX global.myY (global.myX+1) (global.myY+1)],stroke[red],swidth[3]<br /> composite=image[textel],x[(round(global.myX - (textel.width)))],y[(round(global.myY - (textel.height / 2)))],if[('global.align'
+										eq 'right')]<br /> composite=image[textel],x[(round(global.myX - (textel.width / 2)))],y[(round(global.myY - (textel.height / 2)))],if[('global.align' eq 'center')]<br /> composite=image[textel],x[(round(global.myX))],y[(round(global.myY - (textel.height
+										/ 2)))],if[('global.align' eq 'left')]<br /> sink
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-6">
+								<div class="panel panel-success">
+									<div class="panel-heading">对齐到，有x、y坐标参考</div>
+									<div class="panel-body">annotate=text[Text String to be rendered],pointsize[18],fill[red],font[VeraSans-Bold],alignto[bottomcenter],x[50],y[50]</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">添加文字外轮廓</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/straw.png" /><br /> annotate=text[String],pointsize[48],fill[red],font[VeraSans-Bold],gravity[center],stroke[green],swidth[2]
+									</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">创建文字的多个外轮廓</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/multistraw.png" /><br /> blank=color[white],name[blk1],height[300],width[300]
+										<br/>annotate=text[Text String],pointsize[48],fill[none],font[VeraSans-Bold],gravity[center],stroke[green],swidth[10]<br/>annotate=text[Text String],pointsize[48],fill[none],font[VeraSans-Bold],gravity[center],stroke[yellow],swidth[5]<br/>annotate=text[Text
+										String],pointsize[48],fill[red],font[VeraSans-Bold],gravity[center] </div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">wrap外包使文本自动断行</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/wrap.png" /><br /> blank=color[white],name[blk1],height[300],width[300]
+										<br/>draw=primitive[circle],points[50 50 50 51],stroke[blue],swidth[2]<br/>annotate=text[Text String to be rendered is much longer than you can fit on one line.],pointsize[18],fill[red],font[VeraSans-Bold],wrap[200],alignto[topleft],x[50],y[50]<br/>sink</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">使用"\n"人为断行</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/textbreak.png" /><br /> blank=color[white],name[blk1],height[300],width[300]
+										<br/>draw=primitive[circle],points[50 50 50 51],stroke[blue],swidth[2]<br/>annotate=text[Text String to be \nrendered is much \nlonger than you \ncan fit on one line.],pointsize[18],fill[red],font[VeraSans-Bold],alignto[topleft],x[50],y[50]<br/>sink</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">文本实体，背景透明</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/trim.png" /><br /> blank=color[none],name[blk1],height[300],width[600]
+										<br/>annotate=text[Text String],pointsize[60],fill[red],font[VeraSans-Bold],gravity[center],width[250]<br/>trim<br/>sink</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">3D 样式</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/3dlook.png" /><br /> blank=color[white],name[blk1],height[300],width[500]
+										<br/>annotate=text[Text String],pointsize[60],fill[grey20],font[VeraSans-Bold],gravity[center],x[2],y[2]<br/>annotate=text[Text String],pointsize[60],fill[grey80],font[VeraSans-Bold],gravity[center],x[-2],y[-2]<br/>annotate=text[Text String],pointsize[60],fill[grey50],font[VeraSans-Bold],gravity[center],x[0],y[0]<br/>sink</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">金属样式</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/ongold.png" /><br /> blank=color[white],name[mask1],height[500],width[500]
+										<br /> annotate=text[Text String],pointsize[36],fill[black],font[VeraSans-Bold],gravity[center],x[50],y[85]<br /> blank=color[#8c782f],name[color1],height[500],width[500]
+										<br /> composite=compose[replacematte],image[mask1]
+										<br /> blur=width[1],sigma[1]
+										<br /> blank=color[#d9c37a],name[color2],height[500],width[500]
+										<br /> composite=compose[replacematte],image[mask1]
+										<br /> blank=color[#ecd88f],name[color3],height[500],width[500]
+										<br /> composite=compose[replacematte],image[mask1]
+										<br /> blur=width[1],sigma[1]
+										<br /> blank=color[white],name[product],height[500],width[500]
+										<br /> source=url[file:training/Yellow-Gold-Pendant.jpg],name[product]
+										<br /> composite=image[color3],x[2],y[1]
+										<br /> composite=image[color1],x[-2],y[-1]
+										<br /> composite=image[color2],x[0],y[0]
+										<br /> sink
+									</div>
+								</div>
+								<div class="panel panel-success">
+									<div class="panel-heading">文字阴影</div>
+									<div class="panel-body">
+										<img src="img/ui/textchains/textshaw.png" /><br /> blank=color[white],name[blk1],height[300],width[500]
+										<br/> annotate=text[Text String],pointsize[60],fill[grey60],font[VeraSans-Bold],gravity[center],x[10],y[8]<br/> blur=width[15],sigma[6]
+										<br/> annotate=text[Text String],pointsize[60],fill[peru],font[VeraSans-Bold],gravity[center],x[0],y[0]<br/> sink
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+	</body>
+
+</html>
